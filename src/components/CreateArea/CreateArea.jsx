@@ -1,9 +1,11 @@
 import React,{useEffect, useState} from "react";
 import { addNote } from "../../services/notes";
+import AddIcon from '@mui/icons-material/Add';
 
 
 export default function CreateArea(props){
   
+  let {alert} = props;
 
   const [note,setNote] = useState({
     title: "",
@@ -21,12 +23,12 @@ export default function CreateArea(props){
   }
 
   useEffect(()=>{
-    if(props.alert){
+    if(alert){
       setTimeout(()=>{
         props.handleAlert(false);
       },1000)
     }
-  },[props.alert])
+  },[alert])
 
 
   function submitNote(event){
@@ -47,7 +49,7 @@ export default function CreateArea(props){
       
         <textarea name="content" onChange={handleChange} value={note.content} placeholder="Take a note..." rows="3" />
 
-        <button type="submit" onClick={submitNote}>Add</button>
+        <button type="submit" onClick={submitNote}><AddIcon/></button>
       </form>
     </div>
   )

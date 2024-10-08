@@ -35,3 +35,18 @@ export async function deleteNoteFromDb(noteId) {
     console.log(error);
   }
 }
+
+export async function editNoteInDb(noteId, newTitle, newContent) {
+  try {
+    const result = await axios.put(
+      `http://localhost:4000/api/notes/${noteId}`,
+      {
+        newTitle: newTitle,
+        newContent: newContent,
+      }
+    );
+    console.log(result);
+  } catch (error) {
+    console.log(error);
+  }
+}

@@ -8,6 +8,11 @@ import useUserId from "../../services/useUserId";
 
 export default function App(){
   const {userId,setUserId} = useUserId();
+  function handleLogout(){
+    setUserId(null);
+    localStorage.clear();
+
+  }
 
   if(!userId){
     return(<div className="container">
@@ -24,6 +29,7 @@ export default function App(){
   }
 
   return (
-    <Keeper userId={userId}/>
+    <Keeper userId={userId}
+      handleLogout={handleLogout}/>
   )
 }

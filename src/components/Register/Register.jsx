@@ -1,7 +1,8 @@
-import React,{useReducer} from "react";
+import React,{useReducer,useState} from "react";
 
 import axios from 'axios';
 import "./Register.css"
+import { useThemeProps } from "@mui/material";
 
 const formReducer = (state,event)=>{
   if(event.reset){
@@ -18,32 +19,32 @@ const formReducer = (state,event)=>{
   }
 }
 
-function Register(){
+function Register(props){
   const [formData,setFormData] = useReducer(formReducer,{});
-
+  const [correctConfirm, setCorrectConfirm] = useState(true);
 
   async function handleSubmit(event){
     event.preventDefault();   
-   
-   try{
-    const response = await axios.post('http://localhost:4000/api/register',
-      formData
-    )
-
-    if(response){
-      
-
-      console.log(response);
-      
-   setFormData({
-    reset: true
-   });
+    if(formData.password!==formData.confirmPassword){
+      setCorrectConfirm(false);
+    }else {
+      try{
+        const response = await axios.post('http://localhost:4000/api/register',
+          formData
+        )    
+        if(response){      
+         console.log(response);   
+         props.setUserId(response.data.userId);
+         
+        setFormData({
+        reset: true
+       });
+        }
+       } catch(e){
+        console.error("Errorr during registretion",e);
+        alert("An erro roccured")
+       }
     }
-   } catch(e){
-    console.error("Errorr during registretion",e);
-    alert("An erro roccured")
-   }
-
   }
 
   function handleChange(event){
@@ -58,27 +59,43 @@ function Register(){
       <h1>Register</h1>
      <form  onSubmit={handleSubmit}>
       <div className="form-group">
-  <fieldset>
-    
+        <fieldset>    
          <label>
-          <p>Name</p>
+          <p className="my-2">Name</p>
            <input className="form-control" type="text" name="name"  value={formData.name || ""} onChange={handleChange}  /></label>
-  </fieldset>
-</div>
+        </fieldset>
+      </div>
 
-   <div className="form-group"> <fieldset>  <label><p>Email</p><input className="form-control" type="email" name="email"  value={formData.email || ""} onChange={handleChange}  /></label></fieldset></div>
+   <div className="form-group">
+     <fieldset>
+      <label><p className="my-2">Email</p>
+      <input className="form-control" type="email" name="email"  value={formData.email || ""} onChange={handleChange}  />
+      </label>
+      </fieldset>
+    </div>
+
+  <div className="form-group">
+     <fieldset><label>
+      <p className="my-2">Password</p>
+      <input className="form-control" type="password" name="password" value={formData.password || ""} onChange={handleChange} />
+      </label></fieldset>
+    </div>
 
 
+  <div className="form-group">
+    <fieldset>
+      <label><p className="my-2">Confirm Password</p>
+      <input className="form-control" type="password" name="confirmPassword" onChange={handleChange}  value={formData.confirmPassword || ""}  />
+      </label>
+    </fieldset>  
+    </div>
+    {
+        !correctConfirm && <div className="form-group text-danger"><p className="mt-2 ">Wrong confirmation of password</p></div>
+      }
 
-  <div className="form-group"> <fieldset><label><p>Password</p><input className="form-control" type="password" name="password" value={formData.password || ""} onChange={handleChange} /></label><p>Password</p></fieldset></div>
-
-
-<div className="form-group">
-  <fieldset>      <label><p>Confirm Password</p><input className="form-control" type="password" name="confirmPassword" onChange={handleChange}  value={formData.confirmPassword || ""}  /></label></fieldset>
-  
-</div>
-
-      <button className="btn btn-primary" type="submit">Register</button>
+    <div>
+        <button className="btn btn-primary mt-3" type="submit">Register</button>
+      </div>
     </form>
     </div>
   )

@@ -1,9 +1,10 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect} from "react";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import CreateArea from "../CreateArea/CreateArea";
 import Note from "../Note/Note";
-import {getNotes,deleteNoteFromDb} from "../../services/notes";
+import {getNotes,deleteNoteFromDb,editNoteInDb} from "../../services/notes";
+
 
 function Keeper(props) {
   const [notes,setNotes] = useState([]);
@@ -12,6 +13,9 @@ function Keeper(props) {
 
   function handleAlert(data){
     setAlert(data);
+  }
+  function handleLogout(){
+    props.handleLogout();
   }
 
   async function fetchNotes(userId){
@@ -45,9 +49,23 @@ function Keeper(props) {
       })
     })
   }
+
+  function handleEditNote(noteId,newTitle,newContent){
+     setNotes(prevNotes=>{
+      return prevNotes.map((note)=>{
+      if(note.id===noteId){
+        return {...note,title:newTitle,content:newContent};
+      }
+      return note;
+    })
+    });
+    editNoteInDb(noteId,newTitle,newContent);
+  }
+
   return (
     <div>
-    <Header />
+    <Header
+    handleLogout={handleLogout} />
     <CreateArea 
         userId={props.userId}
         handleAlert={handleAlert}
@@ -62,6 +80,7 @@ function Keeper(props) {
           title={noteItem.title}
           content={noteItem.content}
           onDelete={deleteNote}
+          onEdit={handleEditNote}
         />
       );
     })}
