@@ -1,7 +1,7 @@
 import React,{useState} from "react";
 import axios from 'axios';
 
-export default function Login(){
+export default function Login(props){
 
   const [credentials,setCredentials] = useState({
     email: "",
@@ -10,15 +10,16 @@ export default function Login(){
   
   const handleLogin = async (event)=>{
     event.preventDefault();
-
     try{
-      const response = await axios.post('http://localhost:4000/api/login',credentials);
-      
-      console.log(response);
+      const userId = await axios.post('http://localhost:4000/api/login',credentials);
+  
+       props.setUserId(userId.data.userId);
+  
     } catch (error){
       console.error("error during login", error);
       alert("an error ocurred");
-    }
+    } 
+
     setCredentials({
       email: "",
       password:""

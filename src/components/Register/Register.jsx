@@ -31,6 +31,8 @@ function Register(){
     )
 
     if(response){
+      
+
       console.log(response);
       
    setFormData({
@@ -52,27 +54,31 @@ function Register(){
   }
 
   return(
-    <div className="wrapper">
+    <div>
       <h1>Register</h1>
-    <form className="register-wrapper" onSubmit={handleSubmit}>
-<fieldset>
+     <form  onSubmit={handleSubmit}>
+      <div className="form-group">
+  <fieldset>
+    
+         <label>
+          <p>Name</p>
+           <input className="form-control" type="text" name="name"  value={formData.name || ""} onChange={handleChange}  /></label>
+  </fieldset>
+</div>
+
+   <div className="form-group"> <fieldset>  <label><p>Email</p><input className="form-control" type="email" name="email"  value={formData.email || ""} onChange={handleChange}  /></label></fieldset></div>
+
+
+
+  <div className="form-group"> <fieldset><label><p>Password</p><input className="form-control" type="password" name="password" value={formData.password || ""} onChange={handleChange} /></label><p>Password</p></fieldset></div>
+
+
+<div className="form-group">
+  <fieldset>      <label><p>Confirm Password</p><input className="form-control" type="password" name="confirmPassword" onChange={handleChange}  value={formData.confirmPassword || ""}  /></label></fieldset>
   
-       <label>
-        <p>Name</p>
-         <input type="text" name="name"  value={formData.name || ""} onChange={handleChange} placeholder="Name" /></label>
-</fieldset>
+</div>
 
-    <fieldset>  <label><p>Email</p><input type="email" name="email"  value={formData.email || ""} onChange={handleChange} placeholder="Email" /></label></fieldset>
-
-
-
-      <fieldset><label><p>Password</p><input type="password" name="password" value={formData.password || ""} onChange={handleChange} placeholder="Password"  /></label><p>Password</p></fieldset>
-
-
-<fieldset>      <label><p>Confirm Password</p><input type="password" name="confirmPassword" onChange={handleChange}  value={formData.confirmPassword || ""} placeholder="Confirm Password" /></label></fieldset>
-
-
-      <button type="submit">Register</button>
+      <button className="btn btn-primary" type="submit">Register</button>
     </form>
     </div>
   )

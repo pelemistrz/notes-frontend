@@ -1,7 +1,9 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
+import { addNote } from "../../services/notes";
 
 
 export default function CreateArea(props){
+  
 
   const [note,setNote] = useState({
     title: "",
@@ -12,26 +14,35 @@ export default function CreateArea(props){
     const {name,value} = event.target;
     setNote(prevNote=>{
       return {
-        prevNote,
+        ...prevNote,
         [name]:value
       }
     })
-
   }
+
+  useEffect(()=>{
+    if(props.alert){
+      setTimeout(()=>{
+        props.handleAlert(false);
+      },1000)
+    }
+  },[props.alert])
+
+
   function submitNote(event){
-    props.onAdd(note);
+    event.preventDefault();
+    addNote(note,props.userId);
     setNote({
       title: "",
       content:""
     });
-    event.preventDefault();
+    props.handleAlert(true);
   }
-
 
   return(
     <div>
       <form action="" className="create-note">
-       
+       {props.alert && <h2>Submit successful</h2>}
           <input type="text" name="title" onChange={handleChange} value={note.title} placeholder="Title"/>
       
         <textarea name="content" onChange={handleChange} value={note.content} placeholder="Take a note..." rows="3" />
