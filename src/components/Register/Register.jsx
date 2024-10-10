@@ -29,7 +29,7 @@ function Register(props){
       setCorrectConfirm(false);
     }else {
       try{
-        const response = await axios.post('http://localhost:4000/api/register',
+        const response = await axios.post('http://localhost:3100/api/register',
           formData
         )    
         if(response){      
