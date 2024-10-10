@@ -12,7 +12,7 @@ export default function Login(props){
   const handleLogin = async (event)=>{
     event.preventDefault();
     try{
-      const result = await axios.post('http://test.marcinpajak.com.pl/api/login',credentials);
+      const result = await axios.post('https://test.marcinpajak.com.pl/api/login',credentials);
       console.log(result);
 
       if(result.data.userId){

@@ -29,7 +29,7 @@ function Register(props){
       setCorrectConfirm(false);
     }else {
       try{
-        const response = await axios.post('http://test.marcinpajak.com.pl/api/register',
+        const response = await axios.post('https://test.marcinpajak.com.pl/api/register',
           formData
         )    
         if(response){      
