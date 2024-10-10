@@ -3,7 +3,7 @@ import axios from "axios";
 export async function getNotes(userId) {
   try {
     const response = await axios.get(
-      `http://localhost:3100/api/notes/${userId}`
+      `http://test.marcinpajak.com.pl/api/notes/${userId}`
     );
 
     return response.data;
@@ -16,7 +16,7 @@ export async function getNotes(userId) {
 export async function addNote(note, userId) {
   try {
     const result = await axios.post(
-      `http://localhost:3100/api/notes/${userId}`,
+      `http://test.marcinpajak.com.pl/api/notes/${userId}`,
       note
     );
     console.log(result);
@@ -28,7 +28,7 @@ export async function addNote(note, userId) {
 export async function deleteNoteFromDb(noteId) {
   try {
     const result = await axios.delete(
-      `http://localhost:3100/api/notes/${noteId}`
+      `http://test.marcinpajak.com.pl/api/notes/${noteId}`
     );
     console.log(result);
   } catch (error) {
@@ -39,7 +39,7 @@ export async function deleteNoteFromDb(noteId) {
 export async function editNoteInDb(noteId, newTitle, newContent) {
   try {
     const result = await axios.put(
-      `http://localhost:3100/api/notes/${noteId}`,
+      `http://test.marcinpajak.com.pl/api/notes/${noteId}`,
       {
         newTitle: newTitle,
         newContent: newContent,
