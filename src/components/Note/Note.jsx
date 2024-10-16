@@ -28,7 +28,7 @@ export default function Note(props){
       (<div className="note">
    
          
-            <input className="form-control mb-2" type="text" clasName="form-control mb-2" value={editedTitle} onChange={e=>setEditedTitle(e.target.value)} />
+            <input className="font-weight-bold form-control mb-2" type="text" clasName="form-control mb-2" value={editedTitle} onChange={e=>setEditedTitle(e.target.value)} />
     
      
       <textarea className="form-control mb-2" value={editedContent} onChange={e=>setEditedContent(e.target.value)}/>  
